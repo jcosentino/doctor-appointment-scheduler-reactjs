@@ -1,7 +1,6 @@
 #Need to modularize the Flask logic
-from flask import Flask
+from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
-from flask import request
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:8milerun@localhost/testdb'
@@ -35,11 +34,20 @@ def handleNothing():
 
 #BROKEN
 @app.route('/signup', methods = ['GET', 'POST'])
-def signup(param):
+def signup():
+	print('signup!')
+	print(request)
 	if request.method == 'POST':
-		addData = Person(name=param)
+		json_data = request.get_json()
+		addData = Person(name=json_data.get('name'))
+		#req_name = request.form['name']
+		#addData = Person(name=req_name)
+		#addData = Person(name=param)
 		db.session.add(addData)
 		db.session.commit()
+# @app.route('/?<name>')
+# def success(name):
+#    return 'welcome %s' % name
 
 if __name__ == '__main__':
 	app.run()

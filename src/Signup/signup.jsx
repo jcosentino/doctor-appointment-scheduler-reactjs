@@ -8,20 +8,44 @@ class Signup extends Component {
 		this.state = {
 			name: ''
 		}
+		this.handleChange = this.handleChange.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	handleChange = (event) => {
+	handleChange(event){
 		this.setState({ name: event.target.value });
 	}
 
-	handleSubmit = async(event) => {
-		try{
-			event.preventDefault(); //What is this?
-			await axios.post(`http://127.0.0.1:5000/signup`, {'name': this.state.name});
-		} catch(err){
+	handleSubmit(event){
+		alert('test');
+		event.preventDefault(); //What is this?
+		const name = {
+      		name: this.state.name
+    	};
+    	alert(JSON.stringify(name));
+		axios.post(`http://127.0.0.1:5000/signup`, {name})
+		.then(res => {
+			console.log(res);
+			console.log(res.data);
+			alert(this.state.name);
+		})
+		.catch(err => {
 			console.log(err);
-		}
+			alert(err);
+		});
 	}
+
+	// async handleSubmit(event){
+	// 	try{
+
+	// 		event.preventDefault(); //What is this?
+	// 		await axios.post(`http://127.0.0.1:5000/signup`, {name: this.state.name});
+	// 		alert(this.state.name);
+	// 	} catch(err){
+	// 		console.log(err);
+	// 		alert(err);
+	// 	}
+	// }
 
 	render(){
 		return (
