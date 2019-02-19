@@ -1,6 +1,7 @@
 #Need to modularize the Flask logic
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from flask import request
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:8milerun@localhost/testdb'
@@ -18,6 +19,11 @@ db.create_all()
 testQueryObj = Person.query.get(1)
 print('Here is the test query:\t {0}'.format(testQueryObj.name))
 
+#This works
+# eg = Person(name='what')
+# db.session.add(eg)
+# db.session.commit()
+
 @app.route('/')
 def hello():
 	print('Hello world!')
@@ -28,12 +34,11 @@ def handleNothing():
 	return 'Nothing!'
 
 #BROKEN
-@app.route('/signup/?<string:name>', methods = ['GET', 'POST'])
-def signup(name):
-	if request.method == 'GET':
-		return Person.query.filter_by(name=name)
+@app.route('/signup', methods = ['GET', 'POST'])
+def signup(param):
 	if request.method == 'POST':
-		db.session.add(name)
+		addData = Person(name=param)
+		db.session.add(addData)
 		db.session.commit()
 
 if __name__ == '__main__':
