@@ -17,17 +17,20 @@ class Signup extends Component {
 	}
 
 	handleSubmit(event){
-		alert('test');
 		event.preventDefault(); //What is this?
 		const name = {
       		name: this.state.name
     	};
-    	alert(JSON.stringify(name));
-		axios.post(`http://127.0.0.1:5000/signup`, {name})
+    	// const config = { headers: {  
+     //                  'Content-Type': 'application/json',
+     //                  'Access-Control-Allow-Origin': '*'}
+     //              }
+		axios.post(`http://127.0.0.1:5000/signup`, {name})//, config)
 		.then(res => {
 			console.log(res);
 			console.log(res.data);
 			alert(this.state.name);
+			return true;
 		})
 		.catch(err => {
 			console.log(err);
