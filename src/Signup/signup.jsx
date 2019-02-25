@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './signup.css';
 import axios from 'axios';
+import queryString from 'query-string'
 
 class Signup extends Component {
 	constructor(props){
@@ -31,15 +32,17 @@ class Signup extends Component {
 
 	handleSubmit(event){
 		event.preventDefault();
+		const config = {
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded'
+			}
+		}
+		const obj = this.state;
 		axios.post(`http://localhost:5000/registerUser`, 
-			{
-				'username': this.state.username,
-				'password': this.state.password,
-				'email': this.state.email
-			})
+			{obj}, config)
 			 .then(res => {
 			 	alert(res.data);
-			 	this.clearInputs();
+			 	//this.clearInputs();
 			 })
 			 .catch((err) => {
 			 	alert(err);
