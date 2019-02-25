@@ -6,56 +6,69 @@ class Signup extends Component {
 	constructor(props){
 		super(props);
 		this.state = {
-			name: ''
+			username: '',
+			password: '',
+			email: ''
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.clearInputs = this.clearInputs.bind(this);
+	}
+
+	clearInputs(){
+		const inputs = document.getElementsByTagName('input');
+		for(let inp of inputs){
+			if(inp.type !== 'submit'){
+				inp.value = '';
+			}
+		}
 	}
 
 	handleChange(event){
-		this.setState({ name: event.target.value });
+		event.preventDefault();
+		this.setState({[event.target.name]: event.target.value});
 	}
 
 	handleSubmit(event){
-		event.preventDefault(); //What is this?
-		const name = {
-      		name: this.state.name
-    	};
-    	// const config = { headers: {  
-     //                  'Content-Type': 'application/json',
-     //                  'Access-Control-Allow-Origin': '*'}
-     //              }
-		axios.post(`http://127.0.0.1:5000/signup`, {name})//, config)
-		.then(res => {
-			console.log(res);
-			console.log(res.data);
-			alert(this.state.name);
-			return true;
-		})
-		.catch(err => {
-			console.log(err);
-			alert(err);
-		});
+		event.preventDefault();
+		axios.post(`http://localhost:5000/registerUser`, 
+			{
+				'username': this.state.username,
+				'password': this.state.password,
+				'email': this.state.email
+			})
+			 .then(res => {
+			 	alert(res.data);
+			 	this.clearInputs();
+			 })
+			 .catch((err) => {
+			 	alert(err);
+			 });
 	}
-
-	// async handleSubmit(event){
-	// 	try{
-
-	// 		event.preventDefault(); //What is this?
-	// 		await axios.post(`http://127.0.0.1:5000/signup`, {name: this.state.name});
-	// 		alert(this.state.name);
-	// 	} catch(err){
-	// 		console.log(err);
-	// 		alert(err);
-	// 	}
-	// }
 
 	render(){
 		return (
 			<div className='signup'>
 				<form onSubmit={this.handleSubmit}>
-					<input type='text' name='name' onChange={this.handleChange}/><br/>
-					<input type='submit' value='Submit'/>
+					<label>
+						Username
+						<input type='text' name='username' 
+							   value={this.state.username}
+							   onChange={this.handleChange}/><br/>
+					</label>
+					<label>
+						Password
+						<input type='password' name='password' 
+							   value={this.state.password} 
+							   onChange={this.handleChange}/><br/>
+					</label>
+					<label>
+						Email
+						<input type='text' name='email' 
+							   value={this.state.email}
+							   onChange={this.handleChange}/><br/>
+					</label>
+					<input type='submit' value='Submit' /><br/>
 				</form>
 			</div>
 		);
