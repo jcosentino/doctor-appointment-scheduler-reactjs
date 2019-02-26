@@ -17,11 +17,8 @@ class Signup extends Component {
 	}
 
 	clearInputs(){
-		const inputs = document.getElementsByTagName('input');
-		for(let inp of inputs){
-			if(inp.type !== 'submit'){
-				inp.value = '';
-			}
+		for(let key of Object.keys(this.state)){
+			this.setState({[key]: ''});
 		}
 	}
 
@@ -46,7 +43,7 @@ class Signup extends Component {
 			getParams(this.state), config)
 			 .then(res => {
 			 	alert(res.data);
-			 	//this.clearInputs();
+			 	this.clearInputs();
 			 })
 			 .catch((err) => {
 			 	alert(err);
