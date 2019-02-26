@@ -29,17 +29,21 @@ class Signup extends Component {
 		event.preventDefault();
 		this.setState({[event.target.name]: event.target.value});
 	}
-
 	handleSubmit(event){
 		event.preventDefault();
 		const config = {
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-			}
+			headers: { 'content-type': 'application/x-www-form-urlencoded' }
 		}
-		const obj = this.state;
+		const getParams = (obj) => {
+			const params = new URLSearchParams();
+			const keys = Object.keys(obj);
+			for(let k of keys){
+				params.append(k, obj[k]);
+			}
+			return params;
+		}
 		axios.post(`http://localhost:5000/registerUser`, 
-			{obj}, config)
+			getParams(this.state), config)
 			 .then(res => {
 			 	alert(res.data);
 			 	//this.clearInputs();
