@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './signup.css';
 import axios from 'axios';
-import queryString from 'query-string'
 
 class Signup extends Component {
 	constructor(props){
