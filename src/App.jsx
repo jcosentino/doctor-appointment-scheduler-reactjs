@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import Signup from './Signup/signup';
 import Login from './Login/login';
-import Home from './Home/home'; //To be removed late, currently for testing purposes
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 class App extends Component {
@@ -13,7 +12,7 @@ class App extends Component {
 				<Switch>
 					 <Route path='/' exact component={Signup} />
 					 <Route path='/login' exact component={Login} />
-					 <Route path='/home' exact component={Home} />
+					{/*future 404 route*/}
 				</Switch>
 			</div>
       </Router>
