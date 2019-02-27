@@ -21,26 +21,12 @@ class Login extends Component {
 		this.getUserData = this.getUserData.bind(this);
 		this.getParams = this.getParams.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
-		this.clearInputs = this.clearInputs.bind(this);
-	}
-
-	clearInputs(){
-		for(let key of Object.keys(this.state)){
-			this.setState({[key]: ''});
-		}
 	}
 
 	handleChange(event){
-		event.preventDefault();
-		this.setState({[event.target.name]: event.target.value});
-	}
-
-	async getUserData(){
-		try{
-			return (await axios.get(`http://localhost:5000/user/1`)).data;
-		} catch(err){
-			return(err);
-		}
+		//event.preventDefault();
+		this.setState({username: event.target.value});
+		alert(this.state.username)
 	}
 
 	getParams(obj) {
@@ -50,6 +36,16 @@ class Login extends Component {
 			params.append(k, obj[k]);
 		}
 		return params;
+	}
+
+	async getUserData(){
+		try{
+			const id = this.state['userid'];
+			alert(id)
+			return (await axios.get(`http://localhost:5000/user/${id}`)).data;
+		} catch(err){
+			return(err);
+		}
 	}
 
 	async handleSubmit(event){

@@ -4,6 +4,16 @@ import axios from 'axios';
 class Home extends Component {
 	constructor(props){
 		super(props);
+
+		this.getProfileData = this.getProfileData.bind(this);
+	}
+
+	async getProfileData(){
+		try{
+			return (await axios.get(`http://localhost:5000/profile/${this.props.userid}`)).data;
+		} catch(err){
+			return(err);
+		}
 	}
 
 	render(){
