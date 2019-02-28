@@ -9,8 +9,12 @@ class Login extends Component {
 		constructor(props){
 		super(props);
 		this.state = {
+			userid: '',
 			username: '',
-			password: '',
+			email: '',
+			createdDate: '',
+			updatedDate: '',
+			isadmin: ''
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.getUserData = this.getUserData.bind(this);
@@ -19,9 +23,8 @@ class Login extends Component {
 	}
 
 	handleChange(event){
-		//event.preventDefault();
-		this.setState({username: event.target.value});
-		alert(this.state.username)
+		event.preventDefault();
+		this.setState({[event.target.name]: event.target.value});
 	}
 
 	getParams(obj) {
@@ -35,8 +38,7 @@ class Login extends Component {
 
 	async getUserData(){
 		try{
-			const id = this.state['userid'];
-			alert(id)
+			const id = this.state.userid;
 			return (await axios.get(`http://localhost:5000/user/${id}`)).data;
 		} catch(err){
 			return(err);
@@ -51,13 +53,12 @@ class Login extends Component {
 
 		try{
 			const result = (await axios.post(`http://localhost:5000/authenticate`, 
-									this.getParams(this.state), config)).data;
+										this.getParams(this.state), config)).data;
 			alert(result);
 				if(result === 'Authentication succeeded!'){
 					const data = await this.getUserData();
 			 		ReactDOM.render(<Home userid = {data['userid']}
-			 							  username = {data['username']}
-			 							  email = {data['email']} />, 
+			 							  username = {data['username']} />, 
 			 				document.getElementById('mainDiv'));
 			 	}
 		} catch(err){

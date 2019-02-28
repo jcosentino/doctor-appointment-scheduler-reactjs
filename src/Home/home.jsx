@@ -4,8 +4,6 @@ import axios from 'axios';
 class Home extends Component {
 	constructor(props){
 		super(props);
-<<<<<<< Updated upstream
-
 		this.getProfileData = this.getProfileData.bind(this);
 	}
 
@@ -15,28 +13,14 @@ class Home extends Component {
 		} catch(err){
 			return(err);
 		}
-=======
-		this.getUserData = this.getUserData.bind(this);
-	}
-
-	getUserData(){
-		let dataArr = [];
-		for(let o of Object.keys(this.props)){
-			dataArr.push(<p>{this.props[o]}</p>);
-		}
-		return(
-			<>
-				{dataArr}
-			</>
-		);
->>>>>>> Stashed changes
 	}
 
 	render(){
 		return (
 			<div>
 				<p>You have logged in!!</p>
-				{this.getUserData()}
+				<p>{this.props.userid}</p>
+				<p>{this.props.username}</p>
 			</div>
 		);
 	}
