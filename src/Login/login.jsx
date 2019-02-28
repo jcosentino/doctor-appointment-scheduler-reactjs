@@ -9,13 +9,8 @@ class Login extends Component {
 		constructor(props){
 		super(props);
 		this.state = {
-			userid: '',
 			username: '',
 			password: '',
-			email: '',
-			createdDate: '',
-			lastUpdated: '',
-			isadmin: ''
 		}
 		this.handleChange = this.handleChange.bind(this);
 		this.getUserData = this.getUserData.bind(this);
@@ -60,8 +55,9 @@ class Login extends Component {
 			alert(result);
 				if(result === 'Authentication succeeded!'){
 					const data = await this.getUserData();
-			 		ReactDOM.render(<Home userid = {data['userid']} 
-			 							  username = {data['username']}/>, 
+			 		ReactDOM.render(<Home userid = {data['userid']}
+			 							  username = {data['username']}
+			 							  email = {data['email']} />, 
 			 				document.getElementById('mainDiv'));
 			 	}
 		} catch(err){
