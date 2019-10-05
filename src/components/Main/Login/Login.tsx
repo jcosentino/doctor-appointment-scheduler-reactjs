@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import './Login.scss';
 import axios from 'axios';
 import querystring from 'querystring';
+import Home from '../Home/Home';
+import ReactDOM from 'react-dom';
 
 const Login: React.FC = () => {
     const [username, setUsername] = useState('');
@@ -28,16 +30,26 @@ const Login: React.FC = () => {
         }
     }
 
+    function resetLoginBoxes(){
+        setUsername('');
+        setPassword('');
+    }
+
     function handleSubmit(event: any): void {
         event.preventDefault();
         // check if logged in
         if(sessionStorage.getItem(username) === 'true'){
             alert(`${username} is already logged in!`);
         }
+        if(sessionStorage.getItem(username) === null){
+            alert('Username and / or password is incorrect!');
+            resetLoginBoxes();
+        }
         authenticate();
         if(auth === 'Authentication succeeded!'){
             sessionStorage.setItem(username, 'true');
             alert(`${username} is now logged in!`);
+            ReactDOM.render(< Home />, document.getElementById('Main'));
         }
     }
 

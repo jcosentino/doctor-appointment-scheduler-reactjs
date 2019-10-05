@@ -7,7 +7,7 @@ const Main: React.FC = () => {
     return (
         <>
         <BrowserRouter>
-        <div className='Main'>
+        <div className='Main' id='Main'>
           <Login />
         </div>
           <Switch>

@@ -1,3 +1,5 @@
 .App {
-  margin: 50vh 50vw 50vh 50vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
